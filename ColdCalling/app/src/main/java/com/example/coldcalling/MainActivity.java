@@ -6,7 +6,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateAndTime, name;
     private Button calledLog, uncalledLog, random;
     private ImageView image;
+    private ArrayList<Icons> Icons= new ArrayList<Icons>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,19 @@ public class MainActivity extends AppCompatActivity {
                 dateAndTime.setText("Date: " + date + " Time: " + time);
             }
         }, 0, 1000);
+        Field[] fields = R.drawable.class.getFields();
+        for (Field field : fields) {
+            if (!field.getName().startsWith("ic") || !field.getName().startsWith("abc")) {
+                try {
+                    Icons.add(new Icons(field.getInt(null), field.getName()));
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        for (int i = 0; i < Icons.size(); i++){
+            System.out.print(Icons.get(i).getName() + " + " + Icons.get(i).getImageResId());
+        }
 
         addListenOnButton();
     }
@@ -41,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         calledLog = (Button) findViewById(R.id.calledLog);
         uncalledLog = (Button) findViewById(R.id.uncalledLog);
         random = (Button) findViewById(R.id.Random);
-        image = (ImageView) findViewById(R.id.image); 
+        image = (ImageView) findViewById(R.id.image);
 
     }
 }
