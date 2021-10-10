@@ -1,5 +1,6 @@
 package com.example.coldcalling;
 
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class Icons {
@@ -10,9 +11,9 @@ public class Icons {
 
     private int mCalled;
 
-    private String mTime;
+    private SimpleDateFormat mTime;
 
-    public Icons(int imageResId, String name, int called , String time) {
+    public Icons(int imageResId, String name, int called , SimpleDateFormat time) {
         mImageResId = imageResId;
         name.replaceAll(" ", "");
         String[]names = name.split("_");
@@ -49,10 +50,11 @@ public class Icons {
         return mCalled;
     }
 
-    public String getTime(){
+    public SimpleDateFormat getTime(){
         return mTime;
     }
-    public void setTime(String time){
+
+    public void setTime(SimpleDateFormat time){
         mTime = time;
     }
 
