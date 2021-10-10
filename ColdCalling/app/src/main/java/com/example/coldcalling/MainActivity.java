@@ -38,7 +38,12 @@ public class MainActivity extends AppCompatActivity {
         }, 0, 1000);
         Field[] fields = R.drawable.class.getFields();
         for (Field field : fields) {
-            if (!field.getName().startsWith("ic") || !field.getName().startsWith("abc")) {
+            if (!field.getName().startsWith("ic") && !field.getName().startsWith("abc")
+                    && !field.getName().startsWith("avd") && !field.getName().startsWith("tool")
+                    && !field.getName().startsWith("btn") && !field.getName().startsWith("design")
+                    && !field.getName().startsWith("material") && !field.getName().startsWith("mtrl")
+                    && !field.getName().startsWith("notif") && !field.getName().startsWith("test")
+                    && !field.getName().startsWith("navi")){
                 try {
                     Icons.add(new Icons(field.getInt(null), field.getName()));
                 } catch (IllegalAccessException e) {
@@ -46,10 +51,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-        for (int i = 0; i < Icons.size(); i++){
-            System.out.print(Icons.get(i).getName() + " + " + Icons.get(i).getImageResId());
-        }
-
         addListenOnButton();
     }
 
