@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateAndTime, name, className;
     private Button calledLog, uncalledLog, random;
     private ImageView image;
-    private ArrayList<Icons> Icons= new ArrayList<Icons>();
+    private ArrayList<Icons> Icons = new ArrayList<Icons>();
     private static final String TAG = "MainActivity";
+    private Date called;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 String date = new SimpleDateFormat("MM/dd/yyy").format(new Date());
                 String time = new SimpleDateFormat("hh:mm a").format(new Date());
-                dateAndTime.setText("Date: " + date +" Time: " + time);
+                dateAndTime.setText("Date: " + date + " Time: " + time);
             }
         }, 0, 1000);
         Field[] fields = R.drawable.class.getFields();
@@ -55,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
                     && !field.getName().startsWith("btn") && !field.getName().startsWith("design")
                     && !field.getName().startsWith("material") && !field.getName().startsWith("mtrl")
                     && !field.getName().startsWith("notif") && !field.getName().startsWith("test")
-                    && !field.getName().startsWith("navi")){
+                    && !field.getName().startsWith("navi")) {
                 try {
-                    Icons.add(new Icons(field.getInt(null), field.getName(), 0, new SimpleDateFormat("hh:mm a")));
+                    Icons.add(new Icons(field.getInt(null), field.getName(), 0, new Date()));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -72,43 +73,35 @@ public class MainActivity extends AppCompatActivity {
         uncalledLog = (Button) findViewById(R.id.uncalledLog);
         image = (ImageView) findViewById(R.id.image);
         random = (Button) findViewById(R.id.Random);
-        random.setOnClickListener(new View.OnClickListener(){
+        random.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Random rand = new Random();
                 int index = rand.nextInt(Icons.size());
-                if(Icons.get(index).getCalled() != 2){
+                if (Icons.get(index).getCalled() < 2) {
                     Icons x = Icons.get(index);
                     image.setImageResource(x.getImageResId());
                     name.setText(x.getName());
-                    if(Icons.get(index).getCalled() < 2) {
+                    if (x.getCalled() < 2) {
                         x.setCalled(x.getCalled() + 1);
                     }
-                }
-                else if(Icons.get(index).getCalled() == 2){
-                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-                    String current = new SimpleDateFormat("hh:mm a").format(new Date());
-                    String called = Icons.get(index).getTime().format(new Date());
-
-
-                    Date firstDate = new Date();
-                    Date secondDate = new Date();
-
-                    try {
-                        firstDate = sdf.parse(current);
-                        secondDate = sdf.parse(called);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    if (Icons.get(index).getCalled() == 2) {
+                        called = new Date();
+                        Icons.get(index).setTime(called);
                     }
-                    long diff = secondDate.getTime() - firstDate.getTime();
-                    Log.d(TAG, "The time is " + diff);
-                }
+                } else {
+                    Date current = new Date();
 
-                else{
+                    long diff = current.getTime() - called.getTime();
+                    Log.d(TAG, "" + current.getTime());
+                    Log.d(TAG, "" + called.getTime());
+                    Log.d(TAG, "The time is " + diff);
+                    if (diff >= 2400000){
+                        Icons.get(index).setCalled(0);
+                    }
                     String message = Icons.get(index).getName() + " has already been called twice in the past 40 minutes. Click randomize again to call another person.";
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
