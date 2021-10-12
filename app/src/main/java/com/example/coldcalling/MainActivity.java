@@ -3,6 +3,7 @@ package com.example.coldcalling;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateAndTime, name, className;
     private Button calledLog, uncalledLog, random;
     private ImageView image;
-    private ArrayList<Icons> Icons = new ArrayList<Icons>();
+    protected ArrayList<Icons> Icons = new ArrayList<Icons>();
     private static final String TAG = "MainActivity";
     private Date called;
 
@@ -70,7 +71,22 @@ public class MainActivity extends AppCompatActivity {
     private void addListenOnButton() {
         name = (TextView) findViewById(R.id.name);
         calledLog = (Button) findViewById(R.id.calledLog);
+        calledLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, CalledLog.class);
+                i.putExtra("list", Icons);
+                startActivity(i);
+            }
+        });
         uncalledLog = (Button) findViewById(R.id.uncalledLog);
+        uncalledLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, UncalledLog.class);
+                startActivity(i);
+            }
+        });
         image = (ImageView) findViewById(R.id.image);
         random = (Button) findViewById(R.id.Random);
         random.setOnClickListener(new View.OnClickListener() {
@@ -103,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
                 }
             }
+
+
         });
     }
+
 }
