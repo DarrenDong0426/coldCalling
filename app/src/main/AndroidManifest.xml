@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ColdCalling">
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -18,6 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CalledLog"
+            android:exported="true"
+            android:label="title_activity_called_log"
+            />
+        <activity
+            android:name=".UncalledLog"
+            android:exported="true"
+            android:label="title_activity_uncalled_log"
+            />
     </application>
 
 </manifest>
