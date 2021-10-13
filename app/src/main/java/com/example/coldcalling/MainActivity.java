@@ -4,7 +4,6 @@ package com.example.coldcalling;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
+import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView dateAndTime, name, className;
     private Button calledLog, uncalledLog, random;
     private ImageView image;
-    protected ArrayList<Icons> Icons = new ArrayList<Icons>();
+    private ArrayList<Icons> Icons = new ArrayList<Icons>();
     private static final String TAG = "MainActivity";
     private Date called;
 
@@ -84,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, UncalledLog.class);
+                i.putExtra("list", Icons);
                 startActivity(i);
             }
         });
