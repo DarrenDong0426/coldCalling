@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Icons implements Serializable {
+public class Icons implements Serializable{
 
     private int mImageResId;
 
