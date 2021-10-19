@@ -34,6 +34,7 @@ public class UncalledLog extends AppCompatActivity {
 
         IconsListAdapter adapter = new IconsListAdapter(this, R.layout.activity_called_log, UnCalledIcons);
         mListView.setAdapter(adapter);
+        mainActivity = (Button) findViewById(R.id.activity_main);
         mainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
